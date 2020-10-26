@@ -1,5 +1,6 @@
 <?php
 
+echo "<pre>";
 use Phalcon\Mvc\Micro;
 use Phalcon\Loader;
 use Phalcon\Di\FactoryDefault;
@@ -20,10 +21,10 @@ $container->set(
     function () {
         return new PdoMysql(
             [
-                'host'     => 'localhost',
+                'host' => 'localhost',
                 'username' => 'root',
                 'password' => '',
-                'dbname'   => 'robotics',
+                'dbname' => 'robotics',
             ]
         );
     }
@@ -45,19 +46,16 @@ $app->get(
     function () use ($app) {
         $phql = 'SELECT id, name '
             . 'FROM MyApp\Models\Robots '
-            . 'ORDER BY name'
-        ;
+            . 'ORDER BY name';
 
         $robots = $app
             ->modelsManager
-            ->executeQuery($phql)
-        ;
+            ->executeQuery($phql);
 
         $data = [];
-
         foreach ($robots as $robot) {
             $data[] = [
-                'id'   => $robot->id,
+                'id' => $robot->id,
                 'name' => $robot->name,
             ];
         }
@@ -74,8 +72,7 @@ $app->get(
             . 'FROM MyApp\Models\Robots '
             . 'WHERE name '
             . 'LIKE :name: '
-            . 'ORDER BY name'
-        ;
+            . 'ORDER BY name';
 
         $robots = $app
             ->modelsManager
@@ -84,14 +81,13 @@ $app->get(
                 [
                     'name' => '%' . $name . '%'
                 ]
-            )
-        ;
+            );
 
         $data = [];
 
         foreach ($robots as $robot) {
             $data[] = [
-                'id'   => $robot->id,
+                'id' => $robot->id,
                 'name' => $robot->name,
             ];
         }
@@ -106,8 +102,7 @@ $app->get(
     function ($id) use ($app) {
         $phql = 'SELECT * '
             . 'FROM MyApp\Models\Robots '
-            . 'WHERE id = :id:'
-        ;
+            . 'WHERE id = :id:';
 
         $robot = $app
             ->modelsManager
@@ -117,8 +112,7 @@ $app->get(
                     'id' => $id,
                 ]
             )
-            ->getFirst()
-        ;
+            ->getFirst();
 
         $response = new Response();
         if ($robot === false) {
@@ -131,8 +125,8 @@ $app->get(
             $response->setJsonContent(
                 [
                     'status' => 'FOUND',
-                    'data'   => [
-                        'id'   => $robot->id,
+                    'data' => [
+                        'id' => $robot->id,
                         'name' => $robot->name
                     ]
                 ]
@@ -148,11 +142,10 @@ $app->post(
     '/api/robots',
     function () use ($app) {
         $robot = $app->request->getJsonRawBody();
-        $phql  = 'INSERT INTO MyApp\ModelsRobots '
+        $phql = 'INSERT INTO MyApp\ModelsRobots '
             . '(name, type, year) '
             . 'VALUES '
-            . '(:name:, :type:, :year:)'
-        ;
+            . '(:name:, :type:, :year:)';
 
         $status = $app
             ->modelsManager
@@ -163,8 +156,7 @@ $app->post(
                     'type' => $robot->type,
                     'year' => $robot->year,
                 ]
-            )
-        ;
+            );
 
         $response = new Response();
 
@@ -176,7 +168,7 @@ $app->post(
             $response->setJsonContent(
                 [
                     'status' => 'OK',
-                    'data'   => $robot,
+                    'data' => $robot,
                 ]
             );
         } else {
@@ -189,7 +181,7 @@ $app->post(
 
             $response->setJsonContent(
                 [
-                    'status'   => 'ERROR',
+                    'status' => 'ERROR',
                     'messages' => $errors,
                 ]
             );
@@ -204,7 +196,7 @@ $app->put(
     '/api/robots/{id:[0-9]+}',
     function ($id) use ($app) {
         $robot = $app->request->getJsonRawBody();
-        $phql  = 'UPDATE MyApp\Models\Robots '
+        $phql = 'UPDATE MyApp\Models\Robots '
             . 'SET name = :name:, type = :type:, year = :year: '
             . 'WHERE id = :id:';
 
@@ -213,13 +205,12 @@ $app->put(
             ->executeQuery(
                 $phql,
                 [
-                    'id'   => $id,
+                    'id' => $id,
                     'name' => $robot->name,
                     'type' => $robot->type,
                     'year' => $robot->year,
                 ]
-            )
-        ;
+            );
 
         $response = new Response();
 
@@ -239,7 +230,7 @@ $app->put(
 
             $response->setJsonContent(
                 [
-                    'status'   => 'ERROR',
+                    'status' => 'ERROR',
                     'messages' => $errors,
                 ]
             );
@@ -264,8 +255,7 @@ $app->delete(
                 [
                     'id' => $id,
                 ]
-            )
-        ;
+            );
 
         $response = new Response();
 
@@ -285,7 +275,7 @@ $app->delete(
 
             $response->setJsonContent(
                 [
-                    'status'   => 'ERROR',
+                    'status' => 'ERROR',
                     'messages' => $errors,
                 ]
             );
@@ -298,3 +288,5 @@ $app->delete(
 $app->handle(
     $_SERVER["REQUEST_URI"]
 );
+
+echo "</pre>";
