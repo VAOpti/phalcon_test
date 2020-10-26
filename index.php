@@ -42,7 +42,7 @@ $app = new Micro();
 
 // Retrieves all robots
 $app->get(
-    '/api/robots',
+    '/phalcon_test/api/robots',
     function () use ($app) {
         $phql = 'SELECT id, name '
             . 'FROM MyApp\Models\Robots '
@@ -66,7 +66,7 @@ $app->get(
 
 // Searches for robots with $name in their name
 $app->get(
-    '/api/robots/search/{name}',
+    '/phalcon_test/api/robots/search/{name}',
     function ($name) use ($app) {
         $phql = 'SELECT * '
             . 'FROM MyApp\Models\Robots '
@@ -98,7 +98,7 @@ $app->get(
 
 // Retrieves robots based on primary key
 $app->get(
-    '/api/robots/{id:[0-9]+}',
+    '/phalcon_test/api/robots/{id:[0-9]+}',
     function ($id) use ($app) {
         $phql = 'SELECT * '
             . 'FROM MyApp\Models\Robots '
@@ -139,7 +139,7 @@ $app->get(
 
 // Adds a new robot
 $app->post(
-    '/api/robots',
+    '/phalcon_test/api/robots',
     function () use ($app) {
         $robot = $app->request->getJsonRawBody();
         $phql = 'INSERT INTO MyApp\ModelsRobots '
@@ -193,7 +193,7 @@ $app->post(
 
 // Updates robots based on primary key
 $app->put(
-    '/api/robots/{id:[0-9]+}',
+    '/phalcon_test/api/robots/{id:[0-9]+}',
     function ($id) use ($app) {
         $robot = $app->request->getJsonRawBody();
         $phql = 'UPDATE MyApp\Models\Robots '
@@ -242,7 +242,7 @@ $app->put(
 
 // Deletes robots based on primary key
 $app->delete(
-    '/api/robots/{id:[0-9]+}',
+    '/phalcon_test/api/robots/{id:[0-9]+}',
     function ($id) use ($app) {
         $phql = 'DELETE '
             . 'FROM MyApp\Models\Robots '
