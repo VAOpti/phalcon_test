@@ -33,6 +33,8 @@ $container->set(
 
 $app = new Micro($container);
 
+$app = new Micro();
+
 //show error to client
 //$app->notFound(function () use ($app) {
 //    $app->response->setStatusCode(404, "Not Found")->sendHeaders();
