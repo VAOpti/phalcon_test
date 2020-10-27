@@ -10,10 +10,9 @@ use Phalcon\Http\Response;
 $loader = new Loader();
 $loader->registerNamespaces(
     [
-        'MyApp\Models' => '..\app\models/',
+        'MyApp\Models' => __DIR__ . '/models/',
     ]
 );
-
 $loader->register();
 
 $container = new FactoryDefault();
@@ -33,8 +32,6 @@ $container->set(
 
 $app = new Micro($container);
 
-$app = new Micro();
-
 //show error to client
 //$app->notFound(function () use ($app) {
 //    $app->response->setStatusCode(404, "Not Found")->sendHeaders();
@@ -43,7 +40,7 @@ $app = new Micro();
 
 // Retrieves all robots
 $app->get(
-    '/phalcon_test/public/api/robots',
+    '/phalcon_test/api/robots',
     function () use ($app) {
         $phql = 'SELECT id, name '
             . 'FROM MyApp\Models\Robots '
@@ -67,7 +64,7 @@ $app->get(
 
 // Searches for robots with $name in their name
 $app->get(
-    '/phalcon_test/public/api/robots/search/{name}',
+    '/phalcon_test/api/robots/search/{name}',
     function ($name) use ($app) {
         $phql = 'SELECT * '
             . 'FROM MyApp\Models\Robots '
@@ -99,7 +96,7 @@ $app->get(
 
 // Retrieves robots based on primary key
 $app->get(
-    '/phalcon_test/public/api/robots/{id:[0-9]+}',
+    '/phalcon_test/api/robots/{id:[0-9]+}',
     function ($id) use ($app) {
         $phql = 'SELECT * '
             . 'FROM MyApp\Models\Robots '
