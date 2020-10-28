@@ -1,18 +1,16 @@
 <?php
 
-use Phalcon\Loader;
+use Phalcon\Mvc\Controller;
 
-define('BASE_PATH', dirname(__DIR__));
-define('APP_PATH', BASE_PATH . '/app');
-// ...
+class SignupController extends Controller
+{
+    public function indexAction()
+    {
 
-$loader = new Loader();
+    }
 
-$loader->registerDirs(
-    [
-        APP_PATH . '/controllers/',
-        APP_PATH . '/models/',
-    ]
-);
-
-$loader->register();
+    public function registerAction()
+    {
+        
+    }
+}
