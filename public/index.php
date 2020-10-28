@@ -5,6 +5,7 @@ use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\View;
 use Phalcon\Url;
 use Phalcon\Mvc\Application;
+use Phalcon\Db\Adapter\Pdo\Mysql;
 
 // Define some absolute path constants to aid in locating resources
 define('BASE_PATH', dirname(__DIR__));
@@ -34,7 +35,7 @@ $container->set(
     }
 );
 
-// Register a base URI
+// Register a base URI for all generated URIs
 $container->set(
     'url',
     function () {
@@ -45,12 +46,26 @@ $container->set(
     }
 );
 
+// Set the database service
+$container->set(
+    'db',
+    function () {
+        return new Mysql(
+            [
+                'host'     => 'localhost',
+                'username' => 'root',
+                'password' => '',
+                'dbname'   => 'house_lister',
+            ]
+        );
+    }
+);
+
 // Accept requests, detect the routes and dispatch the controller and render the view
 $application = new Application($container);
-
-//print_r($_SERVER['REQUEST_URI']);
 try {
     // Handle the request
+
     // Original code is bugged
 //    $response = $application->handle(
 //        $_SERVER["REQUEST_URI"]
