@@ -17,10 +17,10 @@
     <?php echo $this->tag->passwordField("password"); ?>
 </p>
 
-<!--<p>-->
-<!--    <label for="email">Admin</label>-->
-<!--    --><?php //echo $this->tag->radioField("admin"); ?>
-<!--</p>-->
+<p>
+    <label for="admin">Admin</label>
+    <?php echo $this->tag->checkField("admin"); ?>
+</p>
 
 <p>
     <?php echo $this->tag->submitButton("Register"); ?>

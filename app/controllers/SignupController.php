@@ -20,9 +20,11 @@ class SignupController extends Controller
                 'name',
                 'email',
                 'password',
-//                'admin'
+                'admin'
             ]
         );
+
+//        $this->view->setVar('users', $user);
 
         // Store and check for errors
         $success = $user->save();
