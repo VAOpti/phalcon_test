@@ -1,11 +1,12 @@
 <?php
-//echo "<pre>";
 use Phalcon\Loader;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\View;
 use Phalcon\Url;
 use Phalcon\Mvc\Application;
 use Phalcon\Db\Adapter\Pdo\Mysql;
+use Phalcon\Session\Manager;
+use Phalcon\Session\Adapter\Stream;
 
 // Define some absolute path constants to aid in locating resources
 define('BASE_PATH', dirname(__DIR__));
@@ -19,10 +20,34 @@ $loader->registerDirs(
         APP_PATH . '/models/',
     ]
 );
+$loader->registerNamespaces(
+    [
+        'MyApp\Models' => '../app/models/',
+    ]
+);
 $loader->register();
 
 // Create a DI
 $container = new FactoryDefault();
+
+// Start a session
+$container->set(
+    'session',
+    function () {
+        $session = new Manager();
+
+        $files = new Stream(
+            [
+                'savePath' => 'tmp',
+            ]
+        );
+        $session->setAdapter($files);
+
+        $session->start();
+
+        return $session;
+    }
+);
 
 // Register the view service
 $container->set(
@@ -62,7 +87,8 @@ $container->set(
 );
 
 // Accept requests, detect the routes and dispatch the controller and render the view
-$application = new Application($container);
+$app = new Application($container);
+
 try {
     // Handle the request
 
@@ -70,10 +96,11 @@ try {
 //    $response = $application->handle(
 //        $_SERVER["REQUEST_URI"]
 //    );
-    $response =  $application->handle(str_replace('phalcon_test/','',$_SERVER['REQUEST_URI']));
+    $response =  $app->handle(
+        str_replace('phalcon_test/','',$_SERVER['REQUEST_URI'])
+    );
 
     $response->send();
-} catch (\Exception $e) {
+} catch (Exception $e) {
     echo 'Exception: ', $e->getMessage();
 }
-//echo "</pre>";

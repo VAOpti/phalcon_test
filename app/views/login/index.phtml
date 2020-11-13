@@ -1,0 +1,27 @@
+<?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+?>
+
+<h2>Log in using this form</h2>
+
+<?php echo $this->tag->form("login/login"); ?>
+
+    <p>
+        <label for="email">E-Mail</label>
+        <?php echo $this->tag->emailField("email"); ?>
+    </p>
+
+    <p>
+        <label for="password">Password</label>
+        <?php echo $this->tag->passwordField("password"); ?>
+    </p>
+
+    <p>
+        <?php echo $this->tag->submitButton("Login"); ?>
+    </p>
+
+</form>
