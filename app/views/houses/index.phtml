@@ -1,0 +1,64 @@
+<?php echo $this->tag->form("houses/register"); ?>
+<div class="row">
+    <div class="col-md">
+        <h2>Add house</h2>
+        <div class="form-row">
+            <div class="form-group col-12">
+                <label for="street">Street</label>
+                <?php echo $this->tag->textField(["street", "class" => "form-control"]); ?>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="number">Number</label>
+                <?php echo $this->tag->numericField(["number", "class" => "form-control"]); ?>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="addition">Addition</label>
+                <?php echo $this->tag->textField(["addition", "class" => "form-control"]); ?>
+            </div>
+
+            <div class="form-group col-12">
+                <label for="zipCode">Zip code</label>
+                <?php echo $this->tag->textField(["zipCode", "class" => "form-control"]); ?>
+            </div>
+
+            <div class="form-group col-12">
+                <label for="city">City</label>
+                <?php echo $this->tag->textField(["city", "class" => "form-control"]); ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 style="float: left">Add rooms</h2>
+            </div>
+            <div class="col-md-6">
+                <button type="button" style="float: right" class="btn btn-primary" id="addRoom">+1</button>
+            </div>
+        </div>
+        <label for="type">Type</label>
+        <?php echo $this->tag->select(["type", "class" => "form-control", array("Living room", "Bedroom", "Toilet", "Bathroom", "Storage")]); ?>
+
+        <label for="type">Width</label>
+        <?php echo $this->tag->numericField(["city", "class" => "form-control"]); ?>
+        <small class="form-text text-muted">In millimeters</small>
+
+        <label for="type">Length</label>
+        <?php echo $this->tag->numericField(["city", "class" => "form-control"]); ?>
+        <small class="form-text text-muted">In millimeters</small>
+
+        <label for="type">Height</label>
+        <?php echo $this->tag->numericField(["city", "class" => "form-control"]); ?>
+        <small class="form-text text-muted">In millimeters</small>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <?php echo $this->tag->submitButton(["Add", "class" => "btn btn-success", "style" => "width: 50%"]); ?>
+    </div>
+</div>
+</form>

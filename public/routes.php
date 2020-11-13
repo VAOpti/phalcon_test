@@ -33,10 +33,10 @@ $container->set(
 $app = new Micro($container);
 
 //show error to client
-//$app->notFound(function () use ($app) {
-//    $app->response->setStatusCode(404, "Not Found")->sendHeaders();
-//    echo 'This is crazy, but this page was not found!';
-//});
+$app->notFound(function () use ($app) {
+    $app->response->setStatusCode(404, "Not Found")->sendHeaders();
+    echo 'This is crazy, but this page was not found!';
+});
 
 // Retrieves all robots
 $app->get(
