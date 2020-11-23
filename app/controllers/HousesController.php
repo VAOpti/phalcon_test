@@ -11,45 +11,33 @@ class HousesController extends Controller
 
     public function registerAction()
     {
-        $house = new \MyApp\Models\Houses();
-
         if ($this->request->isPost()) {
-            $house->assign(
-                $this->request->getPost(),
-                [
-                    'street',
-                    'number',
-                    'addition',
-                    'zipCode',
-                    'city'
-                ]
-            );
 
             $postData = $this->request->getPost();
 
-            $context = stream_context_create(array(
-                'http' => array(
-                    'method' => 'POST',
-                    'header' => "Content-Type: application/json",
-                    'content' => json_encode($postData)
-                )
+            //Send the curl request
+            $ch = curl_init('http://localhost/api.phalcon_test/houses');
+            curl_setopt_array($ch, array(
+                CURLOPT_POST => TRUE,
+                CURLOPT_RETURNTRANSFER => TRUE,
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+                CURLOPT_POSTFIELDS => json_encode($postData)
             ));
 
-            $response = file_get_contents('http://localhost/phalcon_test/api/houses/', FALSE, $context);
+            $response = curl_exec($ch);
 
             // Check for errors
             if($response === FALSE){
-                echo "DIED";
-                //die('Error');
+                echo "NO RESPONSE";
+                die(curl_error($ch));
             }
 
+            //TODO: getting unchaught error: Access to undeclared static property: Phalcon\Di::$_default
+            print_r("Response: ". $response);
             // Decode the response
             $responseData = json_decode($response, TRUE);
-
-            // Print the date from the response
-            echo "<pre>";
-            print_r($response);
-            echo "</pre>";
         }
     }
 }

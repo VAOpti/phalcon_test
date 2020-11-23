@@ -2,9 +2,11 @@
 
 echo "<h1>Hello!</h1>";
 
+//BUTTONS
 echo $this->tag->linkTo(["signup", "Sign Up Here!", 'class' => 'btn btn-primary']);
 echo $this->tag->linkTo(["login", "Log In Here!", 'class' => 'btn btn-success']);
 echo $this->tag->linkTo(["houses", "Add houses", 'class' => 'btn btn-success']);
+
 echo $this->flashSession->output();
 if ($users->count() > 0) {
     ?>

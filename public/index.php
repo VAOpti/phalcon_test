@@ -27,7 +27,7 @@ $loader->registerNamespaces(
 );
 $loader->register();
 
-// Create a DI
+// Create a dependency injector
 $container = new FactoryDefault();
 
 // Start a session
@@ -86,7 +86,7 @@ $container->set(
     }
 );
 
-// Accept requests, detect the routes and dispatch the controller and render the view
+// Accept requests, detect the routes, dispatch the controller and render the view
 $app = new Application($container);
 
 try {
